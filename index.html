@@ -9,19 +9,85 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <link rel="icon" type="image/jpg" href="image/back.jpg">
 
-
   <style>
+    /* Asosiy reset */
     * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;}
     body {background-color: #0a0a0a; color: #fff;}
-    header {background: #111; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; position: sticky; top: 0; z-index: 999; border-bottom: 1px solid #ffb400;}
+    
+    /* Header */
+    header {
+      background: #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 1px solid #ffb400;
+      flex-wrap: wrap;
+    }
     header h1 {color: #ffb400; font-size: 22px;}
-    nav a {color: #fff; margin: 0 15px; text-decoration: none; font-weight: 500; transition: 0.3s;}
+    nav {display: flex; flex-wrap: wrap;}
+    nav a {
+      color: #fff;
+      margin: 5px 15px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
     nav a:hover {color: #ffb400;}
-    .hero {background: url('image/banner.jpg') center/cover no-repeat; height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; color: #fff;}
+
+    /* Hero bo‘limi */
+    .hero {
+      background: url('image/banner.jpg') center/cover no-repeat;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      color: #fff;
+      padding: 0 20px;
+    }
     .hero h2 {font-size: 36px; color: #ffb400; text-shadow: 0 0 10px #000;}
     .hero p {max-width: 600px; margin-top: 10px;}
-    footer {background: #111; padding: 30px; text-align: center; border-top: 1px solid #333; color: #ccc; font-size: 14px;}
+
+    /* Footer */
+    footer {
+      background: #111;
+      padding: 30px 20px;
+      text-align: center;
+      border-top: 1px solid #333;
+      color: #ccc;
+      font-size: 14px;
+    }
     footer a {color: #ffb400; text-decoration: none;}
+
+    /* Responsive dizayn */
+    @media (max-width: 1024px) {
+      header {padding: 15px 20px;}
+      .hero h2 {font-size: 28px;}
+      .hero p {font-size: 16px;}
+      nav {justify-content: center;}
+    }
+
+    @media (max-width: 768px) {
+      header {flex-direction: column; align-items: flex-start;}
+      nav {flex-direction: column; width: 100%;}
+      nav a {margin: 8px 0;}
+      .hero {height: 60vh;}
+      .hero h2 {font-size: 24px;}
+      .hero p {font-size: 14px; max-width: 100%;}
+    }
+
+    @media (max-width: 480px) {
+      header h1 {font-size: 20px; text-align: center; width: 100%;}
+      .hero {height: 50vh; padding: 0 10px;}
+      .hero h2 {font-size: 20px;}
+      .hero p {font-size: 13px;}
+      footer {padding: 20px 10px; font-size: 12px;}
+    }
   </style>
 </head>
 <body>
@@ -41,8 +107,6 @@
     <p>Eng sifatli kostyum, shim, futbolka va oyoq kiyimlar — bir joyda! <br>
     Exclusive Premium House siz uchun maxsus tanlov bilan.</p>
   </section>
-
-  <!-- Bu yerga keyin "Biz haqimizda" bo‘limini qo‘shamiz -->
 
   <footer>
     <p>
