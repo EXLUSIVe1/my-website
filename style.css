@@ -188,16 +188,38 @@ nav a.active {
   }
 }
 
-/* Small phones */
-@media (max-width: 480px) {
-  .products {
-    grid-template-columns: 1fr;
+@media(max-width:768px) {
+  nav {
+    grid-template-columns: 1fr 1fr; /* Telefon uchun 2 ustun */
+    max-width: 100%;
+    gap: 10px;
   }
-  .product-card img {
-    height: 180px;
+
+  nav a:last-child {
+    grid-column: span 2; /* Oxirgi tugma bitta qatorda to‘liq */
   }
-  .filters input,
-  .filters select {
-    width: 100%;
-  }
+}
+nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 ta ustun */
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Tugmalarni button ko‘rinishiga keltirish */
+nav a {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border: 1px solid gold;
+  border-radius: 10px;
+  background: #111;
+}
+
+/* Active */
+nav a.active {
+  background: gold;
+  color: #000;
+  font-weight: 700;
 }
