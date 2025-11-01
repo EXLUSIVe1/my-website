@@ -10,35 +10,78 @@
   <link rel="icon" type="image/jpg" href="image/back.jpg">
 
   <style>
-    /* Asosiy reset */
+    /* Universal reset */
     * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;}
     body {background-color: #0a0a0a; color: #fff;}
-    
-    /* Header */
+
+    /* ✅ PREMIUM NAVBAR */
     header {
-      background: #111;
+      background: #000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 40px;
+      padding: 15px 25px;
+      border-bottom: 1px solid gold;
       position: sticky;
       top: 0;
       z-index: 999;
-      border-bottom: 1px solid #ffb400;
       flex-wrap: wrap;
     }
-    header h1 {color: #ffb400; font-size: 22px;}
-    nav {display: flex; flex-wrap: wrap;}
+
+    .logo {
+      color: gold;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
     nav a {
       color: #fff;
-      margin: 5px 15px;
       text-decoration: none;
       font-weight: 500;
       transition: 0.3s;
     }
-    nav a:hover {color: #ffb400;}
 
-    /* Hero bo‘limi */
+    nav a:hover,
+    nav a.active {
+      color: gold;
+      text-shadow: 0 0 10px gold;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      color: gold;
+      cursor: pointer;
+    }
+
+    /* ✅ MOBILE NAVBAR */
+    @media (max-width: 768px) {
+      .menu-toggle {display: block;}
+
+      nav {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        background: #000;
+        flex-direction: column;
+        text-align: center;
+        display: none;
+        padding: 15px 0;
+        border-bottom: 1px solid gold;
+      }
+
+      nav.active {display: flex;}
+      nav a {padding: 10px 0; width: 100%; font-size: 18px;}
+    }
+
+    /* HERO */
     .hero {
       background: url('image/banner.jpg') center/cover no-repeat;
       height: 70vh;
@@ -47,13 +90,22 @@
       justify-content: center;
       text-align: center;
       flex-direction: column;
-      color: #fff;
       padding: 0 20px;
     }
-    .hero h2 {font-size: 36px; color: #ffb400; text-shadow: 0 0 10px #000;}
-    .hero p {max-width: 600px; margin-top: 10px;}
 
-    /* Footer */
+    .hero h2 {
+      font-size: 36px;
+      color: gold;
+      text-shadow: 0 0 10px black;
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    /* FOOTER */
     footer {
       background: #111;
       padding: 30px 20px;
@@ -62,39 +114,26 @@
       color: #ccc;
       font-size: 14px;
     }
-    footer a {color: #ffb400; text-decoration: none;}
+    footer a {color: gold; text-decoration: none;}
 
-    /* Responsive dizayn */
-    @media (max-width: 1024px) {
-      header {padding: 15px 20px;}
-      .hero h2 {font-size: 28px;}
-      .hero p {font-size: 16px;}
-      nav {justify-content: center;}
-    }
-
-    @media (max-width: 768px) {
-      header {flex-direction: column; align-items: flex-start;}
-      nav {flex-direction: column; width: 100%;}
-      nav a {margin: 8px 0;}
-      .hero {height: 60vh;}
-      .hero h2 {font-size: 24px;}
-      .hero p {font-size: 14px; max-width: 100%;}
-    }
-
+    /* RESPONSIVE TEXT SIZES */
     @media (max-width: 480px) {
-      header h1 {font-size: 20px; text-align: center; width: 100%;}
-      .hero {height: 50vh; padding: 0 10px;}
-      .hero h2 {font-size: 20px;}
-      .hero p {font-size: 13px;}
-      footer {padding: 20px 10px; font-size: 12px;}
+      .hero h2 {font-size: 22px;}
+      .hero p {font-size: 14px;}
     }
   </style>
 </head>
+
 <body>
+
+  <!-- ✅ Premium Navbar -->
   <header>
-    <h1>Exclusive Premium House</h1>
-    <nav>
-      <a href="index.html">Bosh sahifa</a>
+    <div class="logo">Exclusive Premium<br>House</div>
+
+    <div class="menu-toggle" id="menuToggle">☰</div>
+
+    <nav id="navMenu">
+      <a href="index.html" class="active">Bosh sahifa</a>
       <a href="products.html">Mahsulotlar</a>
       <a href="contact.html">Aloqa</a>
       <a href="cart.html">Savat 🛒</a>
@@ -102,12 +141,14 @@
     </nav>
   </header>
 
+  <!-- ✅ Hero section -->
   <section class="hero">
     <h2>Premium Erkaklar Kiyimlari</h2>
     <p>Eng sifatli kostyum, shim, futbolka va oyoq kiyimlar — bir joyda! <br>
     Exclusive Premium House siz uchun maxsus tanlov bilan.</p>
   </section>
 
+  <!-- ✅ Footer -->
   <footer>
     <p>
       📍 <a href="https://maps.app.goo.gl/BPi7uSVBbJM7jP8aA" target="_blank">Manzilni ko‘rish</a> |
@@ -115,8 +156,10 @@
       💬 <a href="https://t.me/exclusive_premium_house" target="_blank">Telegram</a> |
       📞 +998 91 987 17 17
     </p>
-    <p>🕐 Ish vaqti: 9:00 - 23:00</p>
+    <p>🕐 Ish vaqti: 9:00 — 23:00</p>
     <p>&copy; 2025 Exclusive Premium House | Barcha huquqlar himoyalangan.</p>
   </footer>
-</body>
-</html>
+
+  <!-- ✅ Hamburger Menu Script -->
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
