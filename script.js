@@ -2,13 +2,11 @@ import { database } from "./firebase-config.js";
 import { ref, onValue, push, set } from "firebase/database";
 
 const productContainer = document.getElementById("productContainer");
-const filterCategory = document.getElementById("filterCategory");
+let allProducts = [];
+let selectedProduct = null;
 
 const productsRef = ref(database, "products/");
 const ordersRef = ref(database, "orders/");
-
-let allProducts = [];
-let selectedProduct = null;
 
 // 🔹 Tovarlarni o‘qish
 onValue(productsRef, (snapshot) => {
@@ -19,23 +17,20 @@ onValue(productsRef, (snapshot) => {
   showProducts(allProducts);
 });
 
-// 🔹 Filtrlash
-filterCategory.addEventListener("input", () => {
-  const text = filterCategory.value.toLowerCase();
-  const filtered = allProducts.filter(p => p.category.toLowerCase().includes(text));
-  showProducts(filtered);
-});
-
 // 🔹 Tovarlarni ekranga chiqarish
 function showProducts(products) {
   productContainer.innerHTML = "";
+  if(!products.length) {
+    productContainer.innerHTML = "<p style='grid-column:1/-1;text-align:center;'>🚫 Mahsulot topilmadi</p>";
+    return;
+  }
   products.forEach((item) => {
     const div = document.createElement("div");
     div.className = "product";
     div.innerHTML = `
-      <img src="${item.imageUrl}" alt="${item.name}">
+      <img src="${item.image}" alt="${item.name}">
       <h3>${item.name}</h3>
-      <p>${item.price} so'm</p>
+      <p>${item.price.toLocaleString()} so'm</p>
       <p><b>${item.category}</b></p>
       <button onclick="openOrder('${item.id}')">🛒 Buyurtma berish</button>
     `;
@@ -59,8 +54,8 @@ document.getElementById("submitOrder").onclick = () => {
   const name = document.getElementById("customerName").value.trim();
   const phone = document.getElementById("customerPhone").value.trim();
 
-  if (!name || !phone) return alert("Iltimos, ism va telefon raqamingizni kiriting!");
-  if (!selectedProduct) return alert("Tovar tanlanmagan!");
+  if(!name || !phone) return alert("Iltimos, ism va telefon raqamingizni kiriting!");
+  if(!selectedProduct) return alert("Tovar tanlanmagan!");
 
   const newOrder = {
     customerName: name,
@@ -68,7 +63,7 @@ document.getElementById("submitOrder").onclick = () => {
     productName: selectedProduct.name,
     productPrice: selectedProduct.price,
     productCategory: selectedProduct.category,
-    productImage: selectedProduct.imageUrl,
+    productImage: selectedProduct.image,
     date: new Date().toLocaleString()
   };
 

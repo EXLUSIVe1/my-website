@@ -1,151 +1,152 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Savat | Exclusive Premium House</title>
-  <link rel="icon" type="image/png" href="image/premiumm.jpg" />
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <link rel="icon" type="image/jpg" href="image/back.jpg">
-<link rel="stylesheet" href="css/style.css">
-
-  <style>
-    * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
-    body {background:#0a0a0a; color:#fff; padding-bottom:50px;}
-    header {background:#111; display:flex; justify-content:space-between; align-items:center; padding:15px 40px; border-bottom:1px solid #ffb400;}
-    header h1 {color:#ffb400; font-size:22px;}
-    nav a {color:#fff; margin:0 15px; text-decoration:none; font-weight:500;}
-    nav a:hover {color:#ffb400;}
-    .container {max-width:800px; margin:40px auto; background:#141414; padding:20px; border-radius:15px;}
-    h2 {color:#ffb400; text-align:center; margin-bottom:20px;}
-    .cart-item {display:flex; align-items:center; justify-content:space-between; background:#1b1b1b; padding:10px; border-radius:10px; margin-bottom:10px;}
-    .cart-item img {width:80px; height:80px; border-radius:8px; object-fit:cover;}
-    .cart-info {flex:1; margin-left:15px;}
-    .cart-info h4 {margin-bottom:5px; color:#ffb400;}
-    .btn {background:#ffb400; color:#000; border:none; border-radius:8px; padding:10px 15px; font-weight:bold; cursor:pointer;}
-    .btn:hover {background:#ffc833;}
-    .form-group {margin-top:15px;}
-    input {width:100%; padding:10px; border-radius:8px; border:none; margin-top:5px; background:#1a1a1a; color:#fff;}
-    footer {background:#111; padding:20px; text-align:center; position:fixed; bottom:0; width:100%; border-top:1px solid #333; color:#999;}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savat | Exclusive Premium House</title>
+<link rel="icon" type="image/png" href="image/premiumm.jpg" />
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0a0a0a;color:#fff;}
+header{background:#111;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;position:sticky;top:0;z-index:999;border-bottom:1px solid #ffb400;}
+header h1{color:#ffb400;font-size:22px;}
+.hamburger{display:block;cursor:pointer;font-size:28px;color:#fff;}
+.nav-links{display:none;flex-direction:column;position:absolute;top:60px;right:20px;background:#111;padding:20px;border-radius:8px;}
+.nav-links a{margin:10px 0;color:#fff;text-decoration:none;font-weight:500;}
+.nav-links.show{display:flex;}
+.container{padding:20px;}
+.cart-item{display:flex;align-items:center;justify-content:space-between;background:#151515;padding:10px;margin:10px 0;border-radius:10px;}
+.cart-item img{width:80px;height:80px;object-fit:cover;border-radius:8px;margin-right:10px;}
+.cart-info{flex:1;}
+.cart-info h4{color:#ffb400;margin-bottom:5px;}
+.cart-info p{color:#ddd;margin-bottom:0;}
+.btn{background:#ffb400;border:none;color:#000;padding:10px 15px;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px 0;}
+.btn:hover{background:#ffd55a;}
+footer{text-align:center;padding:20px;font-size:14px;color:#aaa;background:#111;border-top:1px solid #333;}
+footer a{color:#ffb400;text-decoration:none;}
+.form-group{margin:10px 0;}
+.form-group input{width:100%;padding:10px;border-radius:8px;border:none;background:#1b1b1b;color:#fff;}
+</style>
 </head>
 <body>
-
 <header>
-  <h1>Exclusive Premium House</h1>
-  <nav>
-    <a href="index.html">Bosh sahifa</a>
-      <a href="products.html">Mahsulotlar</a>
-      <a href="contact.html">Aloqa</a>
-      <a href="cart.html">Savat 🛒</a>
-      <a href="admin.html">Admin Panel</a>
-  </nav>
+<h1>Exclusive Premium House</h1>
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+<nav class="nav-links">
+<a href="index.html">Bosh sahifa</a>
+<a href="products.html">Mahsulotlar</a>
+<a href="contact.html">Aloqa</a>
+<a href="cart.html">Savat 🛒</a>
+<a href="admin.html">Admin Panel</a>
+</nav>
 </header>
 
 <div class="container">
-  <h2>🛍️ Sizning savatingiz</h2>
-  <div id="cartItems"></div>
-  <p id="totalPrice" style="text-align:right; margin-top:10px; font-size:18px;"></p>
+<h2>🛍️ Sizning savatingiz</h2>
+<div id="cartItems"></div>
+<p id="totalPrice" style="text-align:right; margin-top:10px; font-size:18px;"></p>
 
-  <div class="form-group">
-    <label>👤 Ism va familiya</label>
-    <input type="text" id="customerName" placeholder="Ismingizni kiriting">
-  </div>
-  <div class="form-group">
-    <label>📞 Telefon raqam</label>
-    <input type="text" id="customerPhone" placeholder="+998...">
-  </div>
+<div class="form-group">
+<label>👤 Ism va familiya</label>
+<input type="text" id="customerName" placeholder="Ismingizni kiriting">
+</div>
+<div class="form-group">
+<label>📞 Telefon raqam</label>
+<input type="text" id="customerPhone" placeholder="+998...">
+</div>
 
-  <button class="btn" onclick="placeOrder()">✅ Buyurtma berish</button>
-  <button class="btn" style="background:#c40000; color:#fff; margin-left:10px;" onclick="clearCart()">🗑️ Savatni tozalash</button>
-  <p id="statusMsg" style="margin-top:15px; color:#ffb400;"></p>
+<button class="btn" onclick="placeOrder()">✅ Buyurtma berish</button>
+<button class="btn" style="background:#c40000; color:#fff; margin-left:10px;" onclick="clearCart()">🗑️ Savatni tozalash</button>
+<p id="statusMsg" style="margin-top:15px; color:#ffb400;"></p>
 </div>
 
 <footer>
-  &copy; 2025 Exclusive Premium House | Barcha huquqlar himoyalangan.
+&copy; 2025 Exclusive Premium House | Barcha huquqlar himoyalangan.
 </footer>
 
 <script>
-  // 🔥 Firebase konfiguratsiyasi
-  const firebaseConfig = {
-    apiKey: "AIzaSyBYf0yxerZxtHYrrshV3FfWvCrf4UfGqVw",
-    authDomain: "newpremium-a4fe8.firebaseapp.com",
-    databaseURL: "https://newpremium-a4fe8-default-rtdb.firebaseio.com",
-    projectId: "newpremium-a4fe8",
-    storageBucket: "newpremium-a4fe8.appspot.com",
-    messagingSenderId: "288211585587",
-    appId: "1:288211585587:web:f10bf78119baef6d98f146"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+// Firebase konfiguratsiyasi
+const firebaseConfig = {
+  apiKey: "AIzaSyBYf0yxerZxtHYrrshV3FfWvCrf4UfGqVw",
+  authDomain: "newpremium-a4fe8.firebaseapp.com",
+  databaseURL: "https://newpremium-a4fe8-default-rtdb.firebaseio.com",
+  projectId: "newpremium-a4fe8",
+  storageBucket: "newpremium-a4fe8.appspot.com",
+  messagingSenderId: "288211585587",
+  appId: "1:288211585587:web:f10bf78119baef6d98f146"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-  // Savatni chiqarish
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const cartContainer = document.getElementById("cartItems");
-  const totalPriceEl = document.getElementById("totalPrice");
+// Savatni chiqarish
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartContainer = document.getElementById("cartItems");
+const totalPriceEl = document.getElementById("totalPrice");
 
-  function renderCart() {
-    cartContainer.innerHTML = "";
-    let total = 0;
-    cart.forEach((item,index)=>{
-      total += parseFloat(item.price);
-      const div = document.createElement("div");
-      div.className="cart-item";
-      div.innerHTML = `
-        <img src="${item.image}" alt="${item.name}">
-        <div class="cart-info">
-          <h4>${item.name}</h4>
-          <p>${item.price} so‘m</p>
-        </div>
-        <button class="btn" onclick="removeItem(${index})">❌</button>
-      `;
-      cartContainer.appendChild(div);
-    });
-    totalPriceEl.textContent = `Jami: ${total.toLocaleString()} so‘m`;
-  }
+function renderCart() {
+  cartContainer.innerHTML = "";
+  let total = 0;
+  cart.forEach((item,index)=>{
+    total += parseFloat(item.price) * item.quantity;
+    const div=document.createElement("div");
+    div.className="cart-item";
+    div.innerHTML=`
+      <img src="${item.image}" alt="${item.name}">
+      <div class="cart-info">
+        <h4>${item.name}</h4>
+        <p>${item.price} so‘m x ${item.quantity}</p>
+      </div>
+      <button class="btn" onclick="removeItem(${index})">❌</button>
+    `;
+    cartContainer.appendChild(div);
+  });
+  totalPriceEl.textContent=`Jami: ${total.toLocaleString()} so‘m`;
+}
 
-  function removeItem(i) {
-    cart.splice(i,1);
-    localStorage.setItem("cart",JSON.stringify(cart));
-    renderCart();
-  }
-
-  function clearCart() {
-    localStorage.removeItem("cart");
-    cart=[];
-    renderCart();
-    totalPriceEl.textContent="";
-  }
-
-  // Buyurtma berish
-  function placeOrder(){
-    const name=document.getElementById("customerName").value;
-    const phone=document.getElementById("customerPhone").value;
-    const statusMsg=document.getElementById("statusMsg");
-
-    if(!name || !phone || cart.length===0){
-      statusMsg.textContent="⚠️ Ism, raqam va mahsulotlar to‘ldirilishi kerak!";
-      return;
-    }
-
-    const order = {
-      name,
-      phone,
-      cart,
-      date: new Date().toLocaleString()
-    };
-
-    db.ref("orders").push(order).then(()=>{
-      statusMsg.textContent="✅ Buyurtma muvaffaqiyatli yuborildi!";
-      clearCart();
-    }).catch(err=>{
-      statusMsg.textContent="❌ Xatolik: "+err.message;
-    });
-  }
-
+function removeItem(i){
+  cart.splice(i,1);
+  localStorage.setItem("cart",JSON.stringify(cart));
   renderCart();
-</script>
+}
 
+function clearCart(){
+  localStorage.removeItem("cart");
+  cart=[];
+  renderCart();
+  totalPriceEl.textContent="";
+}
+
+// Buyurtma berish
+function placeOrder(){
+  const name=document.getElementById("customerName").value.trim();
+  const phone=document.getElementById("customerPhone").value.trim();
+  const statusMsg=document.getElementById("statusMsg");
+
+  if(!name || !phone || cart.length===0){
+    statusMsg.textContent="⚠️ Ism, raqam va mahsulotlar to‘ldirilishi kerak!";
+    return;
+  }
+
+  const order = {
+    customerName: name,
+    customerPhone: phone,
+    cart,
+    date: new Date().toLocaleString()
+  };
+
+  db.ref("orders").push(order).then(()=>{
+    statusMsg.textContent="✅ Buyurtma muvaffaqiyatli yuborildi!";
+    clearCart();
+  }).catch(err=>{
+    statusMsg.textContent="❌ Xatolik: "+err.message;
+  });
+}
+
+renderCart();
+
+function toggleMenu(){document.querySelector('.nav-links').classList.toggle('show');}
+</script>
 </body>
 </html>

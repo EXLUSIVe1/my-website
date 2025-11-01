@@ -1,69 +1,29 @@
-/* GENERAL */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background: #0a0a0a;
-  color: #fff;
-}
-
-/* ✅ PREMIUM NAVBAR */
-header {
+.nav {
   background: #000;
+  color: gold;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 25px;
-  border-bottom: 1px solid gold;
-  position: sticky;
-  top: 0;
-  z-index: 999;
   flex-wrap: wrap;
 }
 
-.logo {
-  color: gold;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-nav {
-  display: flex;
-  gap: 25px;
-}
-
-nav a {
+.nav a {
   color: #fff;
+  margin-left: 15px;
   text-decoration: none;
   font-weight: 500;
-  transition: 0.3s;
 }
 
-nav a:hover,
-nav a.active {
+.nav a.active {
   color: gold;
-  text-shadow: 0 0 10px gold;
 }
 
-/* Hamburger icon */
-.menu-toggle {
-  display: none;
-  font-size: 28px;
-  color: gold;
-  cursor: pointer;
-}
-
-/* ✅ PRODUCTS PAGE */
 .filters {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin: 30px 0;
-  flex-wrap: wrap;
 }
 
 .filters input,
@@ -72,37 +32,31 @@ nav a.active {
   border-radius: 10px;
   border: none;
   outline: none;
-  min-width: 150px;
-  background: #222;
-  color: #fff;
 }
 
-/* Products grid */
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   padding: 20px;
 }
 
 .product-card {
-  background: #1a1a1a;
+  background: #222;
   border-radius: 15px;
   overflow: hidden;
   text-align: center;
-  padding-bottom: 12px;
+  padding-bottom: 10px;
   transition: 0.3s;
-  border: 1px solid #333;
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
-  border-color: gold;
+  transform: translateY(-5px);
 }
 
 .product-card img {
   width: 100%;
-  height: 260px;
+  height: 250px;
   object-fit: cover;
 }
 
@@ -114,152 +68,18 @@ nav a.active {
 .product-card .price {
   font-weight: bold;
   color: #fff;
-  margin-bottom: 8px;
 }
 
 .product-card .btn {
   background: gold;
   border: none;
-  padding: 10px 18px;
-  border-radius: 25px;
+  padding: 8px 15px;
+  border-radius: 20px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .product-card .btn:hover {
   background: #fff;
   color: #000;
-}
-
-/* ✅ MEDIA QUERIES */
-
-/* Tablet */
-@media (max-width: 1024px) {
-  .products {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-  .product-card img {
-    height: 220px;
-  }
-}
-
-/* Mobile menu + layout */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  nav {
-    position: absolute;
-    top: 70px;
-    right: 0;
-    width: 100%;
-    background: #000;
-    flex-direction: column;
-    display: none;
-    text-align: center;
-    padding: 15px 0;
-    border-bottom: 1px solid gold;
-  }
-
-  nav.active {
-    display: flex;
-  }
-
-  nav a {
-    padding: 10px;
-    width: 100%;
-  }
-
-  .filters {
-    flex-direction: column;
-    gap: 12px;
-    width: 90%;
-    margin: 20px auto;
-  }
-
-  .products {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  }
-  
-  .product-card img {
-    height: 200px;
-  }
-}
-
-@media(max-width:768px) {
-  nav {
-    grid-template-columns: 1fr 1fr; /* Telefon uchun 2 ustun */
-    max-width: 100%;
-    gap: 10px;
-  }
-
-  nav a:last-child {
-    grid-column: span 2; /* Oxirgi tugma bitta qatorda to‘liq */
-  }
-}
-nav {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 ta ustun */
-  gap: 12px;
-  width: 100%;
-  max-width: 600px;
-}
-
-/* Tugmalarni button ko‘rinishiga keltirish */
-nav a {
-  display: block;
-  text-align: center;
-  padding: 12px;
-  border: 1px solid gold;
-  border-radius: 10px;
-  background: #111;
-}
-
-/* Active */
-nav a.active {
-  background: gold;
-  color: #000;
-  font-weight: 700;
-}
-/* NAVIGATION GRID */
-nav {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto; /* markazga qo‘yadi */
-}
-
-/* Tugma dizayni */
-nav a {
-  background: #111;
-  color: #fff;
-  text-decoration: none;
-  padding: 12px;
-  border-radius: 10px;
-  text-align: center;
-  border: 1px solid #ffb400;
-  transition: 0.3s;
-  font-weight: 600;
-}
-
-nav a:hover {
-  background: #ffb400;
-  color: #000;
-}
-
-/* PHONE (2 ustun) */
-@media(max-width: 768px) {
-  nav {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  /* Oxirgi tugma 2 ustun o‘rni */
-  nav a:last-child {
-    grid-column: span 2;
-  }
 }

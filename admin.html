@@ -7,197 +7,188 @@
 <link rel="icon" type="image/png" href="../image/premiumm.jpg" />
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <link rel="icon" type="image/jpg" href="image/back.jpg">
-<link rel="stylesheet" href="css/style.css">
 
 <style>
-  body{background:#0a0a0a;color:#fff;font-family:'Poppins',sans-serif;padding:20px;}
-  h1{text-align:center;color:#ffb400;margin-bottom:20px;}
-  .login-form, .admin-panel{max-width:600px;margin:50px auto;padding:25px;border:1px solid #ffb400;border-radius:12px;background:#111;}
-  input,select{width:100%;padding:10px;margin:10px 0;border:none;border-radius:8px;background:#1b1b1b;color:#fff;}
-  button{padding:10px 15px;border:none;border-radius:8px;background:#ffb400;color:#000;font-weight:bold;cursor:pointer;}
-  button:hover{background:#ffc833;}
-  table{width:100%;border-collapse:collapse;margin-top:20px;}
-  th,td{padding:10px;text-align:left;border-bottom:1px solid #222;}
-  th{background:#ffb400;color:#000;}
-  .status{font-weight:bold;color:#00ff9d;}
+body{background:#0a0a0a;color:#fff;font-family:'Poppins',sans-serif;padding:20px;}
+h1{text-align:center;color:#ffb400;margin-bottom:20px;}
+.login-form,.admin-panel{max-width:600px;margin:50px auto;padding:25px;border:1px solid #ffb400;border-radius:12px;background:#111;}
+input,select{width:100%;padding:10px;margin:10px 0;border:none;border-radius:8px;background:#1b1b1b;color:#fff;}
+button{padding:10px 15px;border:none;border-radius:8px;background:#ffb400;color:#000;font-weight:bold;cursor:pointer;}
+button:hover{background:#ffc833;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #222;}
+th{background:#ffb400;color:#000;}
+.status{font-weight:bold;color:#00ff9d;}
+
+/* Hamburger menu */
+header{background:#111; display:flex; justify-content:space-between; align-items:center; padding:15px 20px; position:sticky; top:0; z-index:999; border-bottom:1px solid #ffb400;}
+header h1{color:#ffb400;}
+nav{display:flex; gap:15px;}
+nav a{color:#fff;text-decoration:none;}
+.hamburger{display:none; flex-direction:column; cursor:pointer;}
+.hamburger div{width:25px;height:3px;background:#ffb400;margin:4px 0;}
+@media(max-width:768px){
+  nav{position:fixed; top:0; left:-100%; height:100%; width:70%; flex-direction:column; background:#111; padding-top:80px; transition:0.3s;}
+  nav.active{left:0;}
+  .hamburger{display:flex;}
+}
 </style>
 </head>
 <body>
 
+<header>
+<h1>Admin Panel</h1>
+<div class="hamburger" id="hamburger"><div></div><div></div><div></div></div>
+<nav id="navMenu">
+<a href="index.html">Bosh sahifa</a>
+<a href="products.html">Mahsulotlar</a>
+<a href="contact.html">Aloqa</a>
+<a href="cart.html">Savat 🛒</a>
+<a href="admin.html">Admin Panel</a>
+</nav>
+</header>
+
 <div class="login-form" id="loginForm">
-  <h1>🔐 Admin Panelga kirish</h1>
-  <input type="password" id="adminPassword" placeholder="Parolni kiriting">
-  <button onclick="login()">Kirish</button>
-  <p id="loginMsg" style="color:#ffb400;"></p>
+<h1>🔐 Admin Panelga kirish</h1>
+<input type="password" id="adminPassword" placeholder="Parolni kiriting">
+<button onclick="login()">Kirish</button>
+<p id="loginMsg" style="color:#ffb400;"></p>
 </div>
 
 <div class="admin-panel" id="adminPanel" style="display:none;">
-  <h1>👋 Xush kelibsiz, Admin!</h1>
-  <button onclick="logout()" style="background:#c40000;color:#fff;margin-bottom:20px;">🚪 Chiqish</button>
+<h1>👋 Xush kelibsiz, Admin!</h1>
+<button onclick="logout()" style="background:#c40000;color:#fff;margin-bottom:20px;">🚪 Chiqish</button>
 
-  <h2>📦 Mahsulot qo‘shish</h2>
-  <input type="text" id="productName" placeholder="Mahsulot nomi">
-  <input type="number" id="productPrice" placeholder="Narxi (so‘m)">
-  <input type="file" id="productImageFile" accept="image/*">
-  
-  </select>
-  <button onclick="addProduct()">📤 Mahsulot qo‘shish</button>
-  <p id="statusMsg"></p>
+<h2>📦 Mahsulot qo‘shish</h2>
+<input type="text" id="productName" placeholder="Mahsulot nomi">
+<input type="number" id="productPrice" placeholder="Narxi (so‘m)">
+<select id="productCategory">
+<option value="">Kategoriya tanlang</option>
+<option value="Kostyum">Kostyum</option>
+<option value="Shim">Shim</option>
+<option value="Futbolka">Futbolka</option>
+<option value="Oyoq kiyim">Oyoq kiyim</option>
+</select>
+<input type="file" id="productImageFile" accept="image/*">
+<button onclick="addProduct()">📤 Mahsulot qo‘shish</button>
+<p id="statusMsg"></p>
 
-  <h2>📝 Joriy mahsulotlar</h2>
-  <table id="productsTable">
-    <thead>
-      <tr>
-        <th>#</th><th>Nom</th><th>Narxi</th><th>Kategoriya</th><th>Rasm</th><th>Amallar</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<h2>📝 Joriy mahsulotlar</h2>
+<table id="productsTable">
+<thead><tr><th>#</th><th>Nom</th><th>Narxi</th><th>Kategoriya</th><th>Rasm</th><th>Amallar</th></tr></thead>
+<tbody></tbody>
+</table>
 
-  <h2>📦 Buyurtmalar</h2>
-  <table id="ordersTable">
-    <thead>
-      <tr>
-        <th>#</th><th>Mahsulot</th><th>Narxi</th><th>Mijoz</th><th>Telefon</th><th>Sana</th><th>Holat</th><th>Amallar</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<h2>📦 Buyurtmalar</h2>
+<table id="ordersTable">
+<thead><tr><th>#</th><th>Mahsulot</th><th>Narxi</th><th>Mijoz</th><th>Telefon</th><th>Sana</th><th>Holat</th><th>Amallar</th></tr></thead>
+<tbody></tbody>
+</table>
 </div>
 
 <script>
-  // === Firebase sozlamasi ===
-  const firebaseConfig = {
-    apiKey: "AIzaSyBYf0yxerZxtHYrrshV3FfWvCrf4UfGqVw",
-    authDomain: "newpremium-a4fe8.firebaseapp.com",
-    databaseURL: "https://newpremium-a4fe8-default-rtdb.firebaseio.com",
-    projectId: "newpremium-a4fe8",
-    storageBucket: "newpremium-a4fe8.appspot.com",
-    messagingSenderId: "288211585587",
-    appId: "1:288211585587:web:f10bf78119baef6d98f146"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+// Firebase konfiguratsiyasi
+const firebaseConfig = {
+apiKey:"AIzaSyBYf0yxerZxtHYrrshV3FfWvCrf4UfGqVw",
+authDomain:"newpremium-a4fe8.firebaseapp.com",
+databaseURL:"https://newpremium-a4fe8-default-rtdb.firebaseio.com",
+projectId:"newpremium-a4fe8",
+storageBucket:"newpremium-a4fe8.appspot.com",
+messagingSenderId:"288211585587",
+appId:"1:288211585587:web:f10bf78119baef6d98f146"
+};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+const correctPassword="aBRORbek1717";
 
-  // === Admin login ===
-  const correctPassword = "aBRORbek1717";
-  function login() {
-    const pass = document.getElementById("adminPassword").value;
-    if (pass === correctPassword) {
-      localStorage.setItem("adminLoggedIn", "true");
-      document.getElementById("loginForm").style.display="none";
-      document.getElementById("adminPanel").style.display="block";
-      loadProducts();
-      loadOrders();
-    } else {
-      document.getElementById("loginMsg").textContent="❌ Noto‘g‘ri parol!";
-    }
-  }
-  function logout() {
-    localStorage.removeItem("adminLoggedIn");
-    location.reload();
-  }
-  if (localStorage.getItem("adminLoggedIn")==="true"){
+// Hamburger toggle
+const hamburger=document.getElementById("hamburger");
+const navMenu=document.getElementById("navMenu");
+hamburger.addEventListener("click",()=>{navMenu.classList.toggle("active");});
+
+// Login
+function login(){
+  const pass=document.getElementById("adminPassword").value;
+  if(pass===correctPassword){
+    localStorage.setItem("adminLoggedIn","true");
     document.getElementById("loginForm").style.display="none";
     document.getElementById("adminPanel").style.display="block";
+    loadProducts(); loadOrders();
+  } else {
+    document.getElementById("loginMsg").textContent="❌ Noto‘g‘ri parol!";
+  }
+}
+function logout(){
+  localStorage.removeItem("adminLoggedIn");
+  location.reload();
+}
+if(localStorage.getItem("adminLoggedIn")==="true"){
+  document.getElementById("loginForm").style.display="none";
+  document.getElementById("adminPanel").style.display="block";
+  loadProducts(); loadOrders();
+}
+
+// imgbb API
+const apiKey="acd1f49b82fa499f80b2da4b3f983061";
+
+async function addProduct(){
+  const name=document.getElementById("productName").value.trim();
+  const price=document.getElementById("productPrice").value.trim();
+  const category=document.getElementById("productCategory").value;
+  const file=document.getElementById("productImageFile").files[0];
+  const statusMsg=document.getElementById("statusMsg");
+
+  if(!name||!price||!file||!category){statusMsg.textContent="⚠️ Barcha maydonlarni to‘ldiring!";return;}
+  statusMsg.textContent="📤 Rasm yuklanmoqda...";
+  const formData=new FormData();
+  formData.append("image",file);
+  try{
+    const res=await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`,{method:"POST",body:formData});
+    const data=await res.json();
+    if(!data.success) throw new Error("Rasm yuklashda xatolik!");
+    const imageUrl=data.data.url;
+    await db.ref("products").push({name,price,category,image:imageUrl});
+    statusMsg.textContent="✅ Mahsulot muvaffaqiyatli qo‘shildi!";
+    document.getElementById("productName").value="";
+    document.getElementById("productPrice").value="";
+    document.getElementById("productCategory").value="";
+    document.getElementById("productImageFile").value="";
     loadProducts();
-    loadOrders();
-  }
+  } catch(err){statusMsg.textContent="❌ Xatolik: "+err.message;}
+}
 
-  // === Mahsulot qo‘shish (imgbb orqali rasm yuklash) ===
-  const apiKey = "acd1f49b82fa499f80b2da4b3f983061"; // Sizning imgbb API kalitingiz
-
-  async function addProduct() {
-    const name = document.getElementById("productName").value.trim();
-    const price = document.getElementById("productPrice").value.trim();
-    const category = document.getElementById("productCategory").value;
-    const file = document.getElementById("productImageFile").files[0];
-    const statusMsg = document.getElementById("statusMsg");
-
-    if (!name || !price || !file) {
-      statusMsg.textContent = "⚠️ Barcha maydonlarni to‘ldiring!";
-      return;
-    }
-
-    statusMsg.textContent = "📤 Rasm yuklanmoqda...";
-
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-        method: "POST",
-        body: formData
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error("Rasm yuklashda xatolik!");
-      const imageUrl = data.data.url;
-
-      await db.ref("products").push({ name, price, image: imageUrl, category });
-      statusMsg.textContent = "✅ Mahsulot muvaffaqiyatli qo‘shildi!";
-      document.getElementById("productName").value = "";
-      document.getElementById("productPrice").value = "";
-      document.getElementById("productImageFile").value = "";
-    } catch (err) {
-      console.error(err);
-      statusMsg.textContent = "❌ Xatolik: " + err.message;
-    }
-  }
-
-  // === Mahsulotlar ro‘yxati ===
-  function loadProducts(){
-    const tbody = document.querySelector("#productsTable tbody");
-    db.ref("products").on("value", snapshot=>{
-      tbody.innerHTML="";
-      let i=1;
-      snapshot.forEach(child=>{
-        const p=child.val();
-        const tr=document.createElement("tr");
-        tr.innerHTML=`
-          <td>${i++}</td>
-          <td>${p.name}</td>
-          <td>${p.price}</td>
-          <td>${p.category}</td>
-          <td><img src="${p.image}" width="50"></td>
-          <td><button onclick="deleteProduct('${child.key}')">🗑 O‘chirish</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
+// Mahsulotlar
+function loadProducts(){
+  const tbody=document.querySelector("#productsTable tbody");
+  db.ref("products").on("value",snapshot=>{
+    tbody.innerHTML=""; let i=1;
+    snapshot.forEach(child=>{
+      const p=child.val();
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td>${i++}</td><td>${p.name}</td><td>${p.price}</td><td>${p.category}</td><td><img src="${p.image}" width="50"></td><td><button onclick="deleteProduct('${child.key}')">🗑 O‘chirish</button></td>`;
+      tbody.appendChild(tr);
     });
-  }
-  function deleteProduct(id){
-    if(confirm("Bu mahsulotni o‘chirmoqchimisiz?")) db.ref("products/"+id).remove();
-  }
+  });
+}
+function deleteProduct(id){
+  if(confirm("Bu mahsulotni o‘chirmoqchimisiz?")) db.ref("products/"+id).remove();
+}
 
-  // === Buyurtmalar ===
-  function loadOrders(){
-    const tbody = document.querySelector("#ordersTable tbody");
-    db.ref("orders").on("value", snapshot=>{
-      tbody.innerHTML="";
-      let i=1;
-      snapshot.forEach(child=>{
-        const o=child.val();
-        const tr=document.createElement("tr");
-        tr.innerHTML=`
-          <td>${i++}</td>
-          <td>${o.productName}</td>
-          <td>${o.price}</td>
-          <td>${o.buyerName}</td>
-          <td>${o.phone}</td>
-          <td>${o.date}</td>
-          <td class="status">${o.status||"Yangi"}</td>
-          <td>
-            <button onclick="markDone('${child.key}')">✅ Bajarildi</button>
-            <button onclick="deleteOrder('${child.key}')">🗑 O‘chirish</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
+// Buyurtmalar
+function loadOrders(){
+  const tbody=document.querySelector("#ordersTable tbody");
+  db.ref("orders").on("value",snapshot=>{
+    tbody.innerHTML=""; let i=1;
+    snapshot.forEach(child=>{
+      const o=child.val();
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td>${i++}</td><td>${o.productName}</td><td>${o.productPrice}</td><td>${o.customerName}</td><td>${o.customerPhone}</td><td>${o.date}</td><td class="status">${o.status||"Yangi"}</td><td><button onclick="markDone('${child.key}')">✅ Bajarildi</button><button onclick="deleteOrder('${child.key}')">🗑 O‘chirish</button></td>`;
+      tbody.appendChild(tr);
     });
-  }
-  function markDone(id){ db.ref("orders/"+id).update({status:"Bajarildi"}); }
-  function deleteOrder(id){ if(confirm("Buyurtmani o‘chirish?")) db.ref("orders/"+id).remove(); }
+  });
+}
+function markDone(id){db.ref("orders/"+id).update({status:"Bajarildi"});}
+function deleteOrder(id){if(confirm("Buyurtmani o‘chirish?")) db.ref("orders/"+id).remove();}
 </script>
 </body>
 </html>

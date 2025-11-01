@@ -1,121 +1,69 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aloqa | Exclusive Premium House</title>
-  <link rel="icon" type="image/png" href="image/premiumm.jpg" />
-    <link rel="icon" type="image/jpg" href="image/back.jpg">
-<link rel="stylesheet" href="css/style.css">
-
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-    body{
-      background:#0a0a0a;
-      color:#fff;
-      padding:0;
-      margin:0;
-    }
-    header{
-      background:#111;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px 40px;
-      border-bottom:1px solid #ffb400;
-    }
-    header h1{
-      color:#ffb400;
-      font-size:22px;
-    }
-    nav a{
-      color:#fff;
-      margin:0 15px;
-      text-decoration:none;
-      font-weight:500;
-    }
-    nav a:hover{
-      color:#ffb400;
-    }
-    .container{
-      max-width:900px;
-      margin:60px auto;
-      background:#141414;
-      padding:40px 30px;
-      border-radius:15px;
-      text-align:center;
-      box-shadow:0 0 20px rgba(255,180,0,0.1);
-    }
-    h2{
-      color:#ffb400;
-      font-size:26px;
-      margin-bottom:20px;
-    }
-    p{
-      line-height:1.8;
-      color:#ddd;
-      font-size:16px;
-    }
-    a{
-      color:#ffb400;
-      text-decoration:none;
-    }
-    a:hover{
-      text-decoration:underline;
-    }
-    .map{
-      margin-top:25px;
-      border-radius:12px;
-      overflow:hidden;
-    }
-    iframe{
-      width:100%;
-      height:350px;
-      border:none;
-    }
-    footer{
-      background:#111;
-      text-align:center;
-      padding:20px;
-      color:#999;
-      border-top:1px solid #222;
-      margin-top:40px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloqa | Exclusive Premium House</title>
+<link rel="icon" type="image/png" href="image/premiumm.jpg" />
+<link rel="icon" type="image/jpg" href="image/back.jpg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0a0a0a;color:#fff;}
+header{background:#111;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;border-bottom:1px solid #ffb400;position:sticky;top:0;z-index:999;}
+header h1{color:#ffb400;font-size:22px;}
+.hamburger{display:block;cursor:pointer;font-size:28px;color:#fff;}
+.nav-links{display:none;flex-direction:column;position:absolute;top:60px;right:20px;background:#111;padding:20px;border-radius:8px;}
+.nav-links a{margin:10px 0;color:#fff;text-decoration:none;font-weight:500;}
+.nav-links.show{display:flex;}
+.container{max-width:900px;margin:60px auto;background:#141414;padding:40px 30px;border-radius:15px;text-align:center;box-shadow:0 0 20px rgba(255,180,0,0.1);}
+h2{color:#ffb400;font-size:26px;margin-bottom:20px;}
+p{line-height:1.8;color:#ddd;font-size:16px;}
+a{color:#ffb400;text-decoration:none;}
+a:hover{text-decoration:underline;}
+.map{margin-top:25px;border-radius:12px;overflow:hidden;}
+iframe{width:100%;height:350px;border:none;}
+footer{background:#111;text-align:center;padding:20px;color:#999;border-top:1px solid #222;margin-top:40px;}
+</style>
 </head>
 <body>
 
 <header>
-  <h1>Exclusive Premium House</h1>
-  <nav>
-   <a href="index.html">Bosh sahifa</a>
-      <a href="products.html">Mahsulotlar</a>
-      <a href="contact.html">Aloqa</a>
-      <a href="cart.html">Savat 🛒</a>
-      <a href="admin.html">Admin Panel</a>
-  </nav>
+<h1>Exclusive Premium House</h1>
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+<nav class="nav-links">
+<a href="index.html">Bosh sahifa</a>
+<a href="products.html">Mahsulotlar</a>
+<a href="contact.html">Aloqa</a>
+<a href="cart.html">Savat 🛒</a>
+<a href="admin.html">Admin Panel</a>
+</nav>
 </header>
 
 <div class="container">
-  <h2>📍 Biz bilan bog‘laning</h2>
-  <p>
-    <strong>Exclusive Premium House</strong> — erkaklar uchun premium darajadagi kiyimlar do‘koni.  
-    Bizning maqsadimiz — sizga sifatli, zamonaviy va qulay kiyimlarni taqdim etish.
-  </p>
-  <br>
-  <p>
-    📍 <a href="https://maps.app.goo.gl/BPi7uSVBbJM7jP8aA" target="_blank">Manzilni ko‘rish (Google xarita)</a><br>
-    📸 <a href="https://www.instagram.com/exclusive_premium_house_" target="_blank">@exclusive_premium_house_</a><br>
-    💬 <a href="https://t.me/exclusive_premium_house" target="_blank">Telegram</a><br>
-    📞 <strong>+998 91 987 17 17</strong><br>
-    🕐 Ish vaqti: <strong>09:00 — 23:00</strong>
-  </p>
+<h2>📍 Biz bilan bog‘laning</h2>
+<p>
+<strong>Exclusive Premium House</strong> — erkaklar uchun premium darajadagi kiyimlar do‘koni.  
+Bizning maqsadimiz — sizga sifatli, zamonaviy va qulay kiyimlarni taqdim etish.
+</p>
+<br>
+<p>
+📍 <a href="https://maps.app.goo.gl/BPi7uSVBbJM7jP8aA" target="_blank">Manzilni ko‘rish (Google xarita)</a><br>
+📸 <a href="https://www.instagram.com/exclusive_premium_house_" target="_blank">@exclusive_premium_house_</a><br>
+💬 <a href="https://t.me/exclusive_premium_house" target="_blank">Telegram</a><br>
+📞 <strong>+998 91 987 17 17</strong><br>
+🕐 Ish vaqti: <strong>09:00 — 23:00</strong>
+</p>
 
-  
+
 
 <footer>
-  &copy; 2025 Exclusive Premium House | Barcha huquqlar himoyalangan.
+&copy; 2025 Exclusive Premium House | Barcha huquqlar himoyalangan.
 </footer>
 
+<script>
+function toggleMenu(){
+  document.querySelector('.nav-links').classList.toggle('show');
+}
+</script>
 </body>
 </html>

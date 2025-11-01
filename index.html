@@ -1,166 +1,63 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exclusive Premium House | Bosh sahifa</title>
-  <link rel="icon" type="image/png" href="image/premiumm.jpg" />
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <link rel="icon" type="image/jpg" href="image/back.jpg">
-<link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exclusive Premium House | Bosh sahifa</title>
+<link rel="icon" type="image/png" href="image/premiumm.jpg" />
 
-  <style>
-    /* Universal reset */
-    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;}
-    body {background-color: #0a0a0a; color: #fff;}
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0a0a0a;color:#fff;}
+header{background:#111;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;position:sticky;top:0;z-index:999;border-bottom:1px solid #ffb400;}
+header h1{color:#ffb400;font-size:22px;}
+.hamburger{display:block;cursor:pointer;font-size:28px;color:#fff;}
+.nav-links{display:none;flex-direction:column;position:absolute;top:60px;right:20px;background:#111;padding:20px;border-radius:8px;}
+.nav-links a{margin:10px 0;color:#fff;text-decoration:none;font-weight:500;}
+.nav-links.show{display:flex;}
 
-    /* ✅ PREMIUM NAVBAR */
-    header {
-      background: #000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 25px;
-      border-bottom: 1px solid gold;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      flex-wrap: wrap;
-    }
+.hero{background:url('image/banner.jpg') center/cover no-repeat;height:70vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;}
+.hero h2{font-size:36px;color:#ffb400;text-shadow:0 0 10px #000;}
+.hero p{max-width:600px;margin-top:10px;}
 
-    .logo {
-      color: gold;
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    nav {
-      display: flex;
-      gap: 25px;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-
-    nav a:hover,
-    nav a.active {
-      color: gold;
-      text-shadow: 0 0 10px gold;
-    }
-
-    .menu-toggle {
-      display: none;
-      font-size: 28px;
-      color: gold;
-      cursor: pointer;
-    }
-
-    /* ✅ MOBILE NAVBAR */
-    @media (max-width: 768px) {
-      .menu-toggle {display: block;}
-
-      nav {
-        position: absolute;
-        top: 70px;
-        right: 0;
-        width: 100%;
-        background: #000;
-        flex-direction: column;
-        text-align: center;
-        display: none;
-        padding: 15px 0;
-        border-bottom: 1px solid gold;
-      }
-
-      nav.active {display: flex;}
-      nav a {padding: 10px 0; width: 100%; font-size: 18px;}
-    }
-
-    /* HERO */
-    .hero {
-      background: url('image/banner.jpg') center/cover no-repeat;
-      height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      flex-direction: column;
-      padding: 0 20px;
-    }
-
-    .hero h2 {
-      font-size: 36px;
-      color: gold;
-      text-shadow: 0 0 10px black;
-    }
-
-    .hero p {
-      max-width: 600px;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-
-    /* FOOTER */
-    footer {
-      background: #111;
-      padding: 30px 20px;
-      text-align: center;
-      border-top: 1px solid #333;
-      color: #ccc;
-      font-size: 14px;
-    }
-    footer a {color: gold; text-decoration: none;}
-
-    /* RESPONSIVE TEXT SIZES */
-    @media (max-width: 480px) {
-      .hero h2 {font-size: 22px;}
-      .hero p {font-size: 14px;}
-    }
-  </style>
+footer{text-align:center;padding:20px;font-size:14px;color:#aaa;background:#111;border-top:1px solid #333;}
+footer a{color:#ffb400;text-decoration:none;}
+</style>
 </head>
-
 <body>
 
-  <!-- ✅ Premium Navbar -->
-  <header>
-    <div class="logo">Exclusive Premium<br>House</div>
+<header>
+  <h1>Exclusive Premium House</h1>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <nav class="nav-links">
+    <a href="index.html">Bosh sahifa</a>
+    <a href="products.html">Mahsulotlar</a>
+    <a href="contact.html">Aloqa</a>
+    <a href="cart.html">Savat 🛒</a>
+    <a href="admin.html">Admin Panel</a>
+  </nav>
+</header>
 
-    <div class="menu-toggle" id="menuToggle">☰</div>
+<section class="hero">
+  <h2>Premium Erkaklar Kiyimlari</h2>
+  <p>Eng sifatli kostyum, shim, futbolka va oyoq kiyimlar — bir joyda!<br>
+     Exclusive Premium House siz uchun maxsus tanlov bilan.</p>
+</section>
 
-    <nav id="navMenu">
-      <a href="index.html" class="active">Bosh sahifa</a>
-      <a href="products.html">Mahsulotlar</a>
-      <a href="contact.html">Aloqa</a>
-      <a href="cart.html">Savat 🛒</a>
-      <a href="admin.html">Admin Panel</a>
-    </nav>
-  </header>
+<footer>
+  <p>
+    📍 <a href="https://maps.app.goo.gl/BPi7uSVBbJM7jP8aA" target="_blank">Manzilni ko‘rish</a> |
+    📸 <a href="https://www.instagram.com/exclusive_premium_house_" target="_blank">@exclusive_premium_house_</a> |
+    💬 <a href="https://t.me/exclusive_premium_house" target="_blank">Telegram</a> |
+    📞 +998 91 987 17 17
+  </p>
+  <p>🕐 Ish vaqti: 9:00 - 23:00</p>
+  <p>&copy; 2025 Exclusive Premium House | Barcha huquqlar himoyalangan.</p>
+</footer>
 
-  <!-- ✅ Hero section -->
-  <section class="hero">
-    <h2>Premium Erkaklar Kiyimlari</h2>
-    <p>Eng sifatli kostyum, shim, futbolka va oyoq kiyimlar — bir joyda! <br>
-    Exclusive Premium House siz uchun maxsus tanlov bilan.</p>
-  </section>
+<script>
+function toggleMenu(){document.querySelector('.nav-links').classList.toggle('show');}
+</script>
 
-  <!-- ✅ Footer -->
-  <footer>
-    <p>
-      📍 <a href="https://maps.app.goo.gl/BPi7uSVBbJM7jP8aA" target="_blank">Manzilni ko‘rish</a> |
-      📸 <a href="https://www.instagram.com/exclusive_premium_house_" target="_blank">@exclusive_premium_house_</a> |
-      💬 <a href="https://t.me/exclusive_premium_house" target="_blank">Telegram</a> |
-      📞 +998 91 987 17 17
-    </p>
-    <p>🕐 Ish vaqti: 9:00 — 23:00</p>
-    <p>&copy; 2025 Exclusive Premium House | Barcha huquqlar himoyalangan.</p>
-  </footer>
-
-  <!-- ✅ Hamburger Menu Script -->
-  <script>
-    const menuToggle = document.getElementById("menuToggle");
+</body>
+</html>
