@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Login | Exclusive Premium House</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link rel="icon" type="image/jpg" href="image/back.jpg">
+
+  <style>
+    body{background:#0a0a0a;color:#fff;font-family:Arial, sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+    .card{background:#111;padding:28px;border-radius:12px;width:360px;border:1px solid #ffb400}
+    h2{color:#ffb400;margin-bottom:12px;text-align:center}
+    input{width:100%;padding:10px;border-radius:8px;border:none;background:#1b1b1b;color:#fff;margin-bottom:10px}
+    button{width:100%;padding:10px;border:none;border-radius:8px;background:#ffb400;color:#000;font-weight:600;cursor:pointer}
+    .small{font-size:13px;color:#ccc;margin-top:10px;text-align:center}
+    .error{color:#ff6b6b;margin-top:8px;text-align:center}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Admin tizimga kirish</h2>
+    <input id="password" type="password" placeholder="1111" />
+    <button id="loginBtn">Kirish</button>
+    <p class="error" id="err"></p>
+    <p class="small">Agar siz admin bo‘lmasangiz sahifaga kirish taqiqlangan.</p>
+  </div>
+
+<script>
+  // Firebase config — o'zingizniki bilan almashtiring
+  const firebaseConfig = {
+    apiKey: "AIzaSyBYf0yxerZxtHYrrshV3FfWvCrf4UfGqVw",
+    authDomain: "newpremium-a4fe8.firebaseapp.com",
+    databaseURL: "https://newpremium-a4fe8-default-rtdb.firebaseio.com",
+    projectId: "newpremium-a4fe8",
+    storageBucket: "newpremium-a4fe8.appspot.com",
+    messagingSenderId: "288211585587",
+    appId: "1:288211585587:web:f10bf78119baef6d98f146"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.database();
+
+  const pwdEl = document.getElementById('password');
+  const btn = document.getElementById('loginBtn');
+  const errEl = document.getElementById('err');
+
+  btn.addEventListener('click', async () => {
+    errEl.textContent = '';
+    const email = emailEl.value.trim();
+    const password = pwdEl.value;
+    if(!email || !password){ errEl.textContent = 'Iltimos parolni kiriting.'; return; }
+
+    try{
+      const userCred = await auth.signInWithEmailAndPassword(email, password);
+      const uid = userCred.user.uid;
+      // tekshir: uid admins ro'yxatida mavjudmi?
+      const snap = await db.ref('admins/' + uid).once('value');
+      if(snap.exists()){
+        // admin: yo'naltirish
+        window.location.href = 'admin.html';
+      } else {
+        errEl.textContent = 'Siz admin emassiz — kirish rad etildi.';
+        auth.signOut();
+      }
+    } catch(err){
+      errEl.textContent = err.message;
+    }
+  });
+
+  // Agar foydalanuvchi auth holati bo'lsa (browserda saqlangan) va admin bo'lsa -> admin.html ga yuborish
+  auth.onAuthStateChanged(async user=>{
+    if(user){
+      const snap = await db.ref('admins/' + user.uid).once('value');
+      if(snap.exists()){
+        window.location.href = 'admin.html';
+      } else {
+        await auth.signOut();
+      }
+    }
+  });
+</script>
+</body>
+</html>

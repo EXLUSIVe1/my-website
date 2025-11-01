@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahsulotlar | Exclusive Premium House</title>
+  <link rel="icon" type="image/png" href="image/premiumm.jpg" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <link rel="icon" type="image/jpg" href="image/back.jpg">
+
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;}
+    body {background: #0a0a0a; color: #fff;}
+    
+    /* HEADER */
+    header {
+      background: #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 1px solid #ffb400;
+    }
+    header h1 {color: #ffb400; font-size: 22px;}
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    nav a:hover {color: #ffb400;}
+
+    /* MAHSULOTLAR */
+    .container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 30px;
+    }
+    .product {
+      background: #151515;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(255,180,0,0.1);
+      transition: 0.3s;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(255,180,0,0.3);
+    }
+    .product img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .product h3 {
+      color: #ffb400;
+      font-size: 18px;
+      margin: 10px 0 5px;
+    }
+    .product p {
+      color: #ddd;
+      margin: 5px 0 10px;
+    }
+    .product button {
+      background: #ffb400;
+      border: none;
+      color: #000;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .product button:hover {
+      background: #ffd55a;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #aaa;
+      background: #111;
+      border-top: 1px solid #333;
+    }
+    footer a {color: #ffb400; text-decoration: none;}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Exclusive Premium House</h1>
+    <nav>
+      <a href="index.html">Bosh sahifa</a>
+      <a href="products.html">Mahsulotlar</a>
+      <a href="contact.html">Aloqa</a>
+      <a href="cart.html">Savat 🛒</a>
+      <a href="admin.html">Admin Panel</a>
+    </nav>
+  </header>
+
+  <div class="container" id="productList">
+    <p style="grid-column: 1 / -1; text-align:center;">⏳ Mahsulotlar yuklanmoqda...</p>
+  </div>
+
+  <footer>
+    <p>
+      📍 <a href="https://maps.app.goo.gl/BPi7uSVBbJM7jP8aA" target="_blank">Manzilni ko‘rish</a> |
+      📸 <a href="https://www.instagram.com/exclusive_premium_house_" target="_blank">@exclusive_premium_house_</a> |
+      💬 <a href="https://t.me/exclusive_premium_house" target="_blank">Telegram</a> |
+      📞 +998 91 987 17 17
+    </p>
+    <p>&copy; 2025 Exclusive Premium House | Barcha huquqlar himoyalangan.</p>
+  </footer>
+
+  <script>
+    // === Firebase sozlamasi ===
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYf0yxerZxtHYrrshV3FfWvCrf4UfGqVw",
+      authDomain: "newpremium-a4fe8.firebaseapp.com",
+      databaseURL: "https://newpremium-a4fe8-default-rtdb.firebaseio.com",
+      projectId: "newpremium-a4fe8",
+      storageBucket: "newpremium-a4fe8.appspot.com",
+      messagingSenderId: "288211585587",
+      appId: "1:288211585587:web:f10bf78119baef6d98f146"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const productList = document.getElementById("productList");
+
+    // === Mahsulotlarni yuklash ===
+    db.ref("products").on("value", (snapshot) => {
+      productList.innerHTML = "";
+      if (!snapshot.exists()) {
+        productList.innerHTML = "<p style='grid-column:1/-1;text-align:center;'>🚫 Mahsulot topilmadi</p>";
+        return;
+      }
+
+      snapshot.forEach((child) => {
+        const p = child.val();
+        const div = document.createElement("div");
+        div.classList.add("product");
+        div.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>${Number(p.price).toLocaleString()} so‘m</p>
+          <button onclick="addToCart('${child.key}', '${p.name}', ${p.price}, '${p.image}')">🛒 Savatga qo‘shish</button>
+        `;
+        productList.appendChild(div);
+      });
+    });
+
+    // === Savatga qo‘shish funksiyasi ===
+    function addToCart(id, name, price, image) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const item = { id, name, price, image, quantity: 1 };
+      const existing = cart.find((i) => i.id === id);
+      if (existing) existing.quantity++;
+      else cart.push(item);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`✅ "${name}" savatga qo‘shildi!`);
+    }
+  </script>
+</body>
+</html>
