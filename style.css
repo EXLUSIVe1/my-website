@@ -223,3 +223,43 @@ nav a.active {
   color: #000;
   font-weight: 700;
 }
+/* NAVIGATION GRID */
+nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto; /* markazga qo‘yadi */
+}
+
+/* Tugma dizayni */
+nav a {
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #ffb400;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+nav a:hover {
+  background: #ffb400;
+  color: #000;
+}
+
+/* PHONE (2 ustun) */
+@media(max-width: 768px) {
+  nav {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Oxirgi tugma 2 ustun o‘rni */
+  nav a:last-child {
+    grid-column: span 2;
+  }
+}
